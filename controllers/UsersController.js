@@ -28,7 +28,7 @@ class UsersController {
     if (search.length > 0) {
       return res.status(400).json({ error: "Already exist" });
     }
-    const hashpwd = hashPasswd(password);
+    const hashpwd = await hashPasswd(password);
     const addUser = await dbClient.db
       .collection("users")
       .insertOne({ email, password: hashpwd });
