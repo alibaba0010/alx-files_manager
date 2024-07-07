@@ -1,13 +1,14 @@
-import express, { json } from "express";
-import controllerRouting from "./routes/index";
+#!/usr/bin/node
 
-const PORT = process.env.PORT || 5000;
-const app = express();
+const express = require("express");
+const router = require("./routes/index");
 
-app.use(json());
+const server = express();
+const PORT = process.env.PORT ? process.env.PORT : 5000;
 
-controllerRouting(app);
+server.use(express.json());
+server.use(router);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+server.listen(PORT, () =>
+  console.log(`The server is running on port: ${PORT}`)
+);

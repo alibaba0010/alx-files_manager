@@ -1,4 +1,4 @@
-import { Router } from 'express';
+/*import { Router } from 'express';
 import { getStatus, getStats } from '../controllers/AppController';
 import { postNew, getMe } from '../controllers/UsersController';
 import { getConnect, getDisconnect } from '../controllers/AuthController';
@@ -19,4 +19,25 @@ router.put('/files/:id/publish', putPublish);
 router.put('/files/:id/unpublish', putUnpublish);
 router.get('/files/:id/data', getFile);
 
-export default router;
+export default router;*/
+
+#!/usr/bin/node
+
+const express = require('express');
+const AppController = require('../controllers/AppController');
+const UsersController = require('../controllers/UsersController');
+const AuthController = require('../controllers/AuthController');
+
+const router = express.Router();
+
+router.get('/status', AppController.getStatus);
+router.get('/stats', AppController.getStats);
+router.post('/users', UsersController.postNew);
+router.get('/connect', AuthController.getConnect);
+router.get('/disconnect', AuthController.getDisconnect);
+router.get('/users/me', AuthController.getMe);
+router.get('/status', AppController.getStatus);
+router.get('/stats', AppController.getStats);
+router.post('/users', UsersController.postNew);
+
+module.exports = router;

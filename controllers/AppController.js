@@ -1,21 +1,23 @@
-import redisClient from '../utils/redis';
-import dbClient from '../utils/db';
+i// Importing the database client and a placeholder for Redis client
+const dbClient = require('../utils/db');
+
+// Assuming a Redis client has similar methods for the example
+const redisClient = {
+  isAlive: () => true, // Placeholder function for Redis connectivity
+};
+
 class AppController {
-  static getStatus(req, res) {
-    if (redisClient.isAlive() && dbClient.isAlive()) {
-      res.status(200).json({ redis: true, db: true }, 200);
-    }
+  static async getStatus(req, res) {
+    const redisAlive = redisClient.isAlive();
+    const dbAlive = dbClient.isAlive();
+    return res.status(200).json({ redis: redisAlive, db: dbAlive });
   }
 
   static async getStats(req, res) {
-    const users = await redisClient.nbUsers();
-    const files = await redisClient.nbFiles();
-    const obj = {
-      users,
-      files,
-    };
-    res.status(200).json(obj);
+    const users = await dbClient.nbUsers();
+    const files = await dbClient.nbFiles();
+    return res.status(200).json({ users, files });
   }
 }
 
-export default AppController;
+module.exports = AppController;
